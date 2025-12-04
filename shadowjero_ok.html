@@ -1,0 +1,198 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<title>ShadowJero Battle</title>
+
+<style>
+body {
+  margin: 0;
+  font-family: Arial;
+  background: radial-gradient(circle, #000, #200020, #000);
+  color: white;
+  text-align: center;
+}
+
+/* FONDO ANIMADO */
+@keyframes fondo {
+  0% {background-position: 0%;}
+  100% {background-position: 100%;}
+}
+
+#game {
+  padding: 20px;
+}
+
+/* BARRAS DE VIDA */
+.barra {
+  width: 300px;
+  height: 25px;
+  border: 3px solid white;
+  margin: 10px auto;
+}
+
+.vida {
+  height: 100%;
+  width: 100%;
+  background: linear-gradient(90deg, lime, green);
+  transition: width 0.4s;
+}
+
+/* PERSONAJES */
+.personajes {
+  display: flex;
+  justify-content: center;
+  gap: 60px;
+  margin-top: 20px;
+}
+
+.card {
+  background: rgba(0,0,0,0.85);
+  padding: 15px;
+  border-radius: 20px;
+  box-shadow: 0 0 20px cyan;
+  width: 260px;
+}
+
+img {
+  width: 180px;
+  filter: drop-shadow(0 0 10px cyan);
+}
+
+/* BOTONES */
+button {
+  margin: 10px;
+  padding: 12px 20px;
+  font-size: 16px;
+  border-radius: 12px;
+  border: none;
+  cursor: pointer;
+  background: gold;
+}
+
+button:hover {
+  background: orange;
+}
+
+#log {
+  margin-top: 15px;
+  min-height: 40px;
+}
+</style>
+</head>
+
+<body>
+
+<div id="game">
+  <h1>⚔️ SHADOWJERO VS SHADOWHERO.EXE ⚔️</h1>
+
+  <!-- BARRAS DE VIDA -->
+  <div>
+    Kirby Diablo Supremo
+    <div class="barra"><div id="vidaKirby" class="vida"></div></div>
+
+    ShadowHero.exe
+    <div class="barra"><div id="vidaShadow" class="vida"></div></div>
+  </div>
+
+  <!-- PERSONAJES -->
+  <div class="personajes">
+
+    <!-- KIRBY -->
+    <div class="card">
+      <h2>👿 Kirby Diablo Supremo</h2>
+      <img src="https://i.imgur.com/6X8pQpP.png">
+      <p>HP: <span id="hpKirby">100</span></p>
+      <button onclick="ataqueKirby()">🌀 Aspiradora</button>
+      <button onclick="mega()">💎 Mega Diablo</button>
+    </div>
+
+    <!-- SHADOW -->
+    <div class="card">
+      <h2>🧬 ShadowHero.exe</h2>
+      <img src="https://i.imgur.com/zH6XG9n.png">
+      <p>HP: <span id="hpShadow">100</span></p>
+      <button onclick="ataqueShadow()">🔥 Ataque Oscuro</button>
+    </div>
+
+  </div>
+
+  <h2 id="log">¡Empieza la batalla!</h2>
+
+</div>
+
+<script>
+let hpKirby = 100;
+let hpShadow = 100;
+
+const sonidoGolpe = new Audio("https://www.soundjay.com/button/sounds/button-10.mp3");
+const sonidoMega = new Audio("https://www.soundjay.com/explosion/sounds/explosion-01.mp3");
+
+function sacudir() {
+  document.body.style.animation = "shake 0.2s";
+  setTimeout(() => document.body.style.animation = "", 200);
+}
+
+function ataqueKirby() {
+  let daño = Math.floor(Math.random() * 20) + 10;
+  hpShadow -= daño;
+  if (hpShadow < 0) hpShadow = 0;
+
+  document.getElementById("hpShadow").textContent = hpShadow;
+  document.getElementById("vidaShadow").style.width = hpShadow + "%";
+  document.getElementById("log").textContent = "Kirby hizo " + daño + " de daño 💥";
+
+  sonidoGolpe.play();
+  sacudir();
+  ganador();
+}
+
+function ataqueShadow() {
+  let daño = Math.floor(Math.random() * 20) + 10;
+  hpKirby -= daño;
+  if (hpKirby < 0) hpKirby = 0;
+
+  document.getElementById("hpKirby").textContent = hpKirby;
+  document.getElementById("vidaKirby").style.width = hpKirby + "%";
+  document.getElementById("log").textContent = "ShadowHero hizo " + daño + " de daño ☠️";
+
+  sonidoGolpe.play();
+  sacudir();
+  ganador();
+}
+
+function mega() {
+  let daño = Math.floor(Math.random() * 35) + 25;
+  hpShadow -= daño;
+  if (hpShadow < 0) hpShadow = 0;
+
+  document.getElementById("hpShadow").textContent = hpShadow;
+  document.getElementById("vidaShadow").style.width = hpShadow + "%";
+  document.getElementById("log").textContent = "💎 MEGA DIABLO ACTIVADO: -" + daño;
+
+  sonidoMega.play();
+  sacudir();
+  ganador();
+}
+
+function ganador() {
+  if (hpKirby <= 0) {
+    document.getElementById("log").textContent = "☠️ SHADOWHERO GANA";
+  }
+  if (hpShadow <= 0) {
+    document.getElementById("log").textContent = "🏆 KIRBY DIABLO SUPREMO GANA";
+  }
+}
+</script>
+
+
+
+
+
+
+
+
+
+
+</body>
+</html>
